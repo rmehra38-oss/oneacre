@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gurgaon Farm Houses & Luxury Properties | 1Acre</title>
+  <meta name="description" content="Buy luxury farmhouses, villas, agriculture land & commercial plots near Sohna Road, Golf Course Extension, Manesar & Farrukhnagar in Gurgaon with 1Acre.">
+  <meta name="keywords" content="Gurgaon property dealer, Gurgaon real estate company, Farm house near Gurgaon, Agriculture land near Gurgaon, Property for sale Gurgaon">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">GURGAON</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="rohtak-property.html" class="nav-link">Rohtak Land</a>
+        <a href="gurgaon-property.html" class="nav-link active">Gurgaon Villas</a>
+        <a href="sonipat-property.html" class="nav-link">Sonipat / KMP</a>
+        <a href="blog.html" class="nav-link">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">+ List Gurgaon Property</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Local Hero -->
+  <section style="background: linear-gradient(135deg, rgba(6,78,59,0.95), rgba(15,23,42,0.95)), url('assets/images/farmhouse.jpg'); background-size: cover; color: #ffffff; padding: 4rem 1.5rem;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 800px;">
+        <span style="color: var(--gold-400); font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">LUXURY REAL ESTATE PORTFOLIO</span>
+        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin: 0.5rem 0 1rem; color: #fff;">
+          Luxury Farm Houses & Land in Gurgaon
+        </h1>
+        <p style="font-size: 1.15rem; opacity: 0.95; line-height: 1.6;">
+          Exclusive 1 to 5-acre gated farmhouses, luxury villas, and commercial industrial plots in Sohna Road, Golf Course Extension, and Manesar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gurgaon Listings Grid -->
+  <section style="max-width: 1280px; margin: 3rem auto; padding: 0 1.5rem;">
+    <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem;">Gurgaon & Delhi NCR Featured Listings</h2>
+    <div id="gurgaon-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;"></div>
+  </section>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('gurgaon-grid');
+      const gurgaonProps = window.db.getProperties().filter(p => p.district === 'Gurgaon' || p.city === 'Gurgaon' || p.city === 'Manesar');
+      grid.innerHTML = gurgaonProps.map(p => window.renderPropertyCard(p)).join('');
+    });
+  </script>
+</body>
+</html>

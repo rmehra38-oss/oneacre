@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haryana Land & Real Estate Guides | 1Acre</title>
+  <meta name="description" content="Read expert guides on Haryana Jamabandi land registry, Intakal mutation, Bigha to Acre land conversion, and real estate market trends in Rohtak & Gurgaon.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">GUIDES</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="rohtak-property.html" class="nav-link">Rohtak Land</a>
+        <a href="gurgaon-property.html" class="nav-link">Gurgaon Villas</a>
+        <a href="sonipat-property.html" class="nav-link">Sonipat / KMP</a>
+        <a href="blog.html" class="nav-link active">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">+ List Property</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section style="background: var(--slate-900); color: #ffffff; padding: 3.5rem 1.5rem;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <span style="color: var(--gold-400); font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">KNOWLEDGE BASE & ADVISORY</span>
+      <h1 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin-top: 0.35rem;">Haryana Real Estate Guides & News</h1>
+      <p style="color: #94a3b8; font-size: 1.1rem; margin-top: 0.5rem;">Learn legal registry workflows, land valuation methods, and investment insights.</p>
+    </div>
+  </section>
+
+  <!-- Blog Cards Grid -->
+  <div style="max-width: 1280px; margin: 3rem auto; padding: 0 1.5rem;">
+    <div id="blog-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem;"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const blogs = window.db.getBlogs();
+      const grid = document.getElementById('blog-cards-grid');
+      
+      grid.innerHTML = blogs.map(b => `
+        <div style="background: #fff; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #e2e8f0; display: flex; flex-direction: column;">
+          <img src="${b.image || 'assets/images/hero.jpg'}" style="height: 200px; width: 100%; object-fit: cover;" onerror="this.src='assets/images/hero.jpg'">
+          <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--gold-500); text-transform: uppercase;">${b.category}</span>
+            <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0.35rem 0 0.75rem; color: var(--slate-900);">${b.title}</h3>
+            <p style="font-size: 0.9rem; color: var(--slate-600); line-height: 1.6; margin-bottom: 1.25rem;">${b.seo_description}</p>
+            <a href="blog-detail.html?slug=${b.slug}" class="btn-primary" style="margin-top: auto; justify-content: center;">Read Full Guide →</a>
+          </div>
+        </div>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

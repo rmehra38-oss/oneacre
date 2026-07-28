@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Farm Houses for Sale near Gurgaon | 1Acre</title>
+  <meta name="description" content="Explore 1 to 5 acre gated luxury farm houses near Gurgaon, Sohna Road, KMP Expressway & Delhi NCR. Gated security, private pools & clear title titles.">
+  <meta name="keywords" content="Farm house near Gurgaon, Luxury farmhouse Gurgaon, Sohna Road farmhouse, 1Acre Gurgaon farm house">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">GURGAON FARMHOUSES</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="gurgaon-property.html" class="nav-link active">Gurgaon Farmhouses</a>
+        <a href="blog.html" class="nav-link">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">+ List Farmhouse</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <section style="background: linear-gradient(135deg, rgba(6,78,59,0.92), rgba(15,23,42,0.92)), url('assets/images/farmhouse.jpg'); background-size: cover; color: #ffffff; padding: 4rem 1.5rem;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 800px;">
+        <span style="color: var(--gold-400); font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">PREMIUM ESTATE COLLECTION</span>
+        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin: 0.5rem 0 1rem; color: #fff;">
+          Luxury Farm Houses near Gurgaon
+        </h1>
+        <p style="font-size: 1.15rem; opacity: 0.95; line-height: 1.6;">
+          Private gated farmhouse estates in Sohna Road, Golf Course Extension, and Manesar-KMP junction with lush lawns, swimming pools, and 24/7 security.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gurgaon Farmhouse Listings -->
+  <section style="max-width: 1280px; margin: 3rem auto; padding: 0 1.5rem;">
+    <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem;">Gurgaon & Sohna Road Farmhouses</h2>
+    <div id="gurgaon-fh-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;"></div>
+  </section>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('gurgaon-fh-grid');
+      const fhProps = window.db.getProperties().filter(p => (p.district === 'Gurgaon' || p.city === 'Gurgaon') && p.subcategory === 'Farm House');
+      grid.innerHTML = fhProps.map(p => window.renderPropertyCard(p)).join('');
+    });
+  </script>
+</body>
+</html>

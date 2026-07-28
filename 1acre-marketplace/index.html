@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1Acre | Haryana's Trusted Real Estate Marketplace for Land & Farmhouses</title>
+  <meta name="description" content="1Acre is Haryana's premier digital real estate marketplace. Buy, sell & list agriculture land, farm houses, luxury villas, and plots in Rohtak, Gurgaon, Sonipat & Delhi NCR.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Schema.org Markup for Organization & Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "1Acre Real Estate Marketplace",
+    "url": "https://1acre.in",
+    "logo": "https://1acre.in/assets/images/hero.jpg",
+    "description": "India's trusted digital marketplace for Haryana agriculture land, farm houses, and luxury properties.",
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Opposite Maharshi Dayanand University (Mastnath Area)",
+        "addressLocality": "Rohtak",
+        "addressRegion": "Haryana",
+        "addressCountry": "IN"
+      },
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "Golf Course Extension Road",
+        "addressLocality": "Gurgaon",
+        "addressRegion": "Haryana",
+        "addressCountry": "IN"
+      }
+    ],
+    "telephone": "+91 98120 44550",
+    "areaServed": ["Rohtak", "Gurgaon", "Delhi NCR", "Sonipat", "Jhajjar", "Panipat", "Manesar"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">HARYANA</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="rohtak-property.html" class="nav-link">Rohtak Land</a>
+        <a href="gurgaon-property.html" class="nav-link">Gurgaon Villas</a>
+        <a href="sonipat-property.html" class="nav-link">Sonipat / KMP</a>
+        <a href="blog.html" class="nav-link">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <!-- Role Switcher Dropdown for Testing All User Dashboards -->
+        <select id="global-role-select" style="padding: 0.45rem 0.65rem; border-radius: 0.5rem; border: 1px solid #cbd5e1; font-size: 0.85rem; font-weight: 600; background: #fff; cursor: pointer;">
+          <option value="buyer">👤 Buyer View</option>
+          <option value="seller">🏡 Seller Portal</option>
+          <option value="admin">🛡️ Admin Panel</option>
+        </select>
+        
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">
+          + List Property
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-wrapper" style="background-image: url('assets/images/hero.jpg');">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div style="max-width: 800px;">
+        <div style="display: inline-block; background: rgba(217, 119, 6, 0.25); border: 1px solid var(--gold-500); color: var(--gold-100); padding: 0.35rem 0.85rem; border-radius: 2rem; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem;">
+          🌾 HARYANA'S #1 MARKETPLACE FOR LAND & FARM HOUSES
+        </div>
+        <h1 style="font-size: 3.2rem; font-weight: 800; line-height: 1.15; text-shadow: 0 4px 12px rgba(0,0,0,0.4); margin-bottom: 1rem;">
+          Find Premium Land & Properties Across Haryana
+        </h1>
+        <p style="font-size: 1.2rem; opacity: 0.95; line-height: 1.6; margin-bottom: 1.5rem;">
+          Buy & sell agricultural land, farm houses, luxury villas, and commercial plots with verified registry titles in Rohtak, Gurgaon, Sonipat & Delhi NCR.
+        </p>
+      </div>
+
+      <!-- Advanced Search Filter Bar -->
+      <div class="search-card">
+        <div class="search-tabs">
+          <button class="search-tab active" onclick="setSearchCategory('All')">All Listings</button>
+          <button class="search-tab" onclick="setSearchCategory('Agriculture')">🌾 Agriculture Land</button>
+          <button class="search-tab" onclick="setSearchCategory('Residential')">🏡 Farm House & Villas</button>
+          <button class="search-tab" onclick="setSearchCategory('Commercial')">🏢 Commercial Land</button>
+        </div>
+
+        <form id="hero-search-form" onsubmit="handleHeroSearch(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) 140px; gap: 1rem; align-items: end;">
+          <div>
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--slate-600); margin-bottom: 0.35rem;">LOCATION / DISTRICT</label>
+            <select id="search-location" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-weight: 600;">
+              <option value="">All Haryana Locations</option>
+              <option value="Ambala">Ambala</option>
+              <option value="Bhiwani">Bhiwani</option>
+              <option value="Charkhi Dadri">Charkhi Dadri</option>
+              <option value="Faridabad">Faridabad</option>
+              <option value="Fatehabad">Fatehabad</option>
+              <option value="Gurgaon">Gurgaon (Gurugram)</option>
+              <option value="Hisar">Hisar</option>
+              <option value="Jhajjar">Jhajjar</option>
+              <option value="Jind">Jind</option>
+              <option value="Kaithal">Kaithal</option>
+              <option value="Karnal">Karnal</option>
+              <option value="Kurukshetra">Kurukshetra</option>
+              <option value="Mahendragarh">Mahendragarh</option>
+              <option value="Nuh">Nuh (Mewat)</option>
+              <option value="Palwal">Palwal</option>
+              <option value="Panchkula">Panchkula</option>
+              <option value="Panipat">Panipat</option>
+              <option value="Rewari">Rewari</option>
+              <option value="Rohtak">Rohtak</option>
+              <option value="Sirsa">Sirsa</option>
+              <option value="Sonipat">Sonipat</option>
+              <option value="Yamunanagar">Yamunanagar</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--slate-600); margin-bottom: 0.35rem;">PROPERTY TYPE</label>
+            <select id="search-type" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-weight: 600;">
+              <option value="">All Property Types</option>
+              <option value="Agricultural Land">Agricultural Land</option>
+              <option value="Farm House">Farm House</option>
+              <option value="Villa">Luxury Villa</option>
+              <option value="Plot">Residential Plot</option>
+              <option value="Commercial Land">Commercial Land</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--slate-600); margin-bottom: 0.35rem;">MEASUREMENT UNIT</label>
+            <select id="search-unit" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-weight: 600;">
+              <option value="Acre">Acre</option>
+              <option value="Bigha">Bigha</option>
+              <option value="Square Yard">Square Yard (Sq.Yd)</option>
+              <option value="Square Feet">Square Feet (Sq.Ft)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--slate-600); margin-bottom: 0.35rem;">MAX BUDGET</label>
+            <select id="search-budget" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-weight: 600;">
+              <option value="">Any Budget</option>
+              <option value="10000000">Up to ₹ 1 Crore</option>
+              <option value="30000000">Up to ₹ 3 Crore</option>
+              <option value="50000000">Up to ₹ 5 Crore</option>
+              <option value="100000000">Up to ₹ 10 Crore+</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary" style="height: 44px; width: 100%; justify-content: center;">
+            Search Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Grid -->
+  <section style="max-width: 1280px; margin: 4rem auto 2rem; padding: 0 1.5rem;">
+    <div style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">
+      <span style="color: var(--gold-500); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.85rem;">Property Categories</span>
+      <h2 style="font-size: 2.25rem; font-weight: 800; margin-top: 0.25rem;">Explore Haryana Property Portfolio</h2>
+      <p style="color: var(--slate-600); margin-top: 0.5rem;">Direct verified listings from landowners, builders, and trusted regional brokers.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      <a href="properties.html?category=Agriculture" style="text-decoration: none; color: inherit;">
+        <div style="background: #fff; padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid #e2e8f0; transition: all 0.3s ease; text-align: center;" class="cat-card">
+          <div style="width: 60px; height: 60px; background: var(--primary-50); color: var(--primary-900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.75rem;">🌾</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Agriculture Land</h3>
+          <p style="color: var(--slate-500); font-size: 0.9rem; line-height: 1.5;">Fertile farming plots near Rohtak, Gurgaon, Sonipat & highway corridors.</p>
+        </div>
+      </a>
+
+      <a href="properties.html?subcategory=Farm House" style="text-decoration: none; color: inherit;">
+        <div style="background: #fff; padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid #e2e8f0; transition: all 0.3s ease; text-align: center;" class="cat-card">
+          <div style="width: 60px; height: 60px; background: var(--gold-100); color: var(--gold-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.75rem;">🏡</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Luxury Farm Houses</h3>
+          <p style="color: var(--slate-500); font-size: 0.9rem; line-height: 1.5;">Gated farmhouse estates near Sohna Road, Delhi NCR & Rohtak bypass.</p>
+        </div>
+      </a>
+
+      <a href="properties.html?subcategory=Villa" style="text-decoration: none; color: inherit;">
+        <div style="background: #fff; padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid #e2e8f0; transition: all 0.3s ease; text-align: center;" class="cat-card">
+          <div style="width: 60px; height: 60px; background: var(--primary-50); color: var(--primary-900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.75rem;">🏰</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Luxury Villas</h3>
+          <p style="color: var(--slate-500); font-size: 0.9rem; line-height: 1.5;">Independent villa bungalows in Golf Course Ext & Rohtak prime sectors.</p>
+        </div>
+      </a>
+
+      <a href="properties.html?category=Commercial" style="text-decoration: none; color: inherit;">
+        <div style="background: #fff; padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid #e2e8f0; transition: all 0.3s ease; text-align: center;" class="cat-card">
+          <div style="width: 60px; height: 60px; background: var(--slate-100); color: var(--slate-900); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.75rem;">🏢</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Commercial & Investment</h3>
+          <p style="color: var(--slate-500); font-size: 0.9rem; line-height: 1.5;">Industrial plots in Manesar, highway plots & petrol pump land.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured Properties Section -->
+  <section style="background: #ffffff; padding: 4rem 1.5rem; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem;">
+        <div>
+          <span style="color: var(--primary-800); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Handpicked Listings</span>
+          <h2 style="font-size: 2.25rem; font-weight: 800; margin-top: 0.25rem;">Featured Verified Properties</h2>
+        </div>
+        <a href="properties.html" class="btn-outline">Explore All Listings →</a>
+      </div>
+
+      <!-- Dynamic Grid -->
+      <div id="featured-properties-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        <!-- Javascript renders property cards here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Spotlights Section (SEO Geo Focus) -->
+  <section style="max-width: 1280px; margin: 4rem auto; padding: 0 1.5rem;">
+    <div style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">
+      <span style="color: var(--gold-500); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Prime Locations</span>
+      <h2 style="font-size: 2.25rem; font-weight: 800; margin-top: 0.25rem;">Explore By Haryana Hubs</h2>
+      <p style="color: var(--slate-600); margin-top: 0.5rem;">Targeted real estate opportunities across key growth districts.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+      <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; height: 260px; box-shadow: var(--shadow-premium);">
+        <img src="assets/images/rohtak_farmhouse_1785166325551.jpg" alt="Rohtak Real Estate" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/farmhouse.jpg'">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,78,59,0.92) 0%, rgba(0,0,0,0.2) 100%); padding: 1.5rem; display: flex; flex-direction: column; justify-content: flex-end; color: #fff;">
+          <h3 style="font-size: 1.5rem; font-weight: 800; color: #fff;">Rohtak</h3>
+          <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.75rem;">Opp. MDU, Delhi Bypass, Sonipat Road & Asthal Bohar</p>
+          <a href="rohtak-property.html" class="btn-gold" style="padding: 0.4rem 0.9rem; font-size: 0.8rem; align-self: flex-start;">Explore Rohtak Land →</a>
+        </div>
+      </div>
+
+      <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; height: 260px; box-shadow: var(--shadow-premium);">
+        <img src="assets/images/hero_haryana_land_1785166279872.jpg" alt="Gurgaon Farmhouse & Land" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/hero.jpg'">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,78,59,0.92) 0%, rgba(0,0,0,0.2) 100%); padding: 1.5rem; display: flex; flex-direction: column; justify-content: flex-end; color: #fff;">
+          <h3 style="font-size: 1.5rem; font-weight: 800; color: #fff;">Gurgaon & Delhi NCR</h3>
+          <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.75rem;">Sohna Road, Golf Course Ext, Manesar & Farrukhnagar</p>
+          <a href="gurgaon-property.html" class="btn-gold" style="padding: 0.4rem 0.9rem; font-size: 0.8rem; align-self: flex-start;">Explore Gurgaon Properties →</a>
+        </div>
+      </div>
+
+      <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; height: 260px; box-shadow: var(--shadow-premium);">
+        <img src="assets/images/agriculture_land_1785166515780.jpg" alt="Sonipat KMP Expressway Land" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/agriculture.jpg'">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,78,59,0.92) 0%, rgba(0,0,0,0.2) 100%); padding: 1.5rem; display: flex; flex-direction: column; justify-content: flex-end; color: #fff;">
+          <h3 style="font-size: 1.5rem; font-weight: 800; color: #fff;">Sonipat & KMP Corridor</h3>
+          <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 0.75rem;">Industrial land, highway plots & fertile agriculture</p>
+          <a href="sonipat-property.html" class="btn-gold" style="padding: 0.4rem 0.9rem; font-size: 0.8rem; align-self: flex-start;">Explore Sonipat Corridor →</a>
+        </div>
+      </div>
+    <!-- All 22 Haryana Districts Directory Grid -->
+    <div style="margin-top: 3.5rem; background: var(--primary-900); padding: 2.5rem; border-radius: var(--radius-lg); color: #fff; box-shadow: var(--shadow-premium);">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span style="color: var(--gold-400); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;">Complete State Coverage</span>
+        <h3 style="font-size: 1.75rem; font-weight: 800; color: #fff; margin-top: 0.25rem;">Browse Properties in All 22 Haryana Districts</h3>
+        <p style="font-size: 0.9rem; color: var(--primary-100); margin-top: 0.25rem;">Click on any district to explore verified agricultural land, farmhouses, plots & commercial listings.</p>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center;">
+        <a href="properties.html?district=Ambala" class="district-chip">Ambala</a>
+        <a href="properties.html?district=Bhiwani" class="district-chip">Bhiwani</a>
+        <a href="properties.html?district=Charkhi Dadri" class="district-chip">Charkhi Dadri</a>
+        <a href="properties.html?district=Faridabad" class="district-chip">Faridabad</a>
+        <a href="properties.html?district=Fatehabad" class="district-chip">Fatehabad</a>
+        <a href="gurgaon-property.html" class="district-chip district-chip-gold">Gurgaon (Gurugram)</a>
+        <a href="properties.html?district=Hisar" class="district-chip">Hisar</a>
+        <a href="properties.html?district=Jhajjar" class="district-chip">Jhajjar</a>
+        <a href="properties.html?district=Jind" class="district-chip">Jind</a>
+        <a href="properties.html?district=Kaithal" class="district-chip">Kaithal</a>
+        <a href="properties.html?district=Karnal" class="district-chip">Karnal</a>
+        <a href="properties.html?district=Kurukshetra" class="district-chip">Kurukshetra</a>
+        <a href="properties.html?district=Mahendragarh" class="district-chip">Mahendragarh</a>
+        <a href="properties.html?district=Nuh" class="district-chip">Nuh (Mewat)</a>
+        <a href="properties.html?district=Palwal" class="district-chip">Palwal</a>
+        <a href="properties.html?district=Panchkula" class="district-chip">Panchkula</a>
+        <a href="properties.html?district=Panipat" class="district-chip">Panipat</a>
+        <a href="properties.html?district=Rewari" class="district-chip">Rewari</a>
+        <a href="rohtak-property.html" class="district-chip district-chip-gold">Rohtak</a>
+        <a href="properties.html?district=Sirsa" class="district-chip">Sirsa</a>
+        <a href="sonipat-property.html" class="district-chip district-chip-gold">Sonipat</a>
+        <a href="properties.html?district=Yamunanagar" class="district-chip">Yamunanagar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background: var(--slate-900); color: #94a3b8; padding: 4rem 1.5rem 2rem; border-top: 1px solid #1e293b;">
+    <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; margin-bottom: 3rem;">
+      <div>
+        <a href="index.html" class="brand-logo" style="color: #fff; margin-bottom: 1rem;">
+          1Acre
+          <span class="brand-badge">HARYANA</span>
+        </a>
+        <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+          Haryana's premier digital marketplace covering all 22 districts for land, farmhouses, villas, and commercial real estate investments.
+        </p>
+        <p style="font-size: 0.85rem; color: var(--gold-400); font-weight: 600;">
+          📞 Helpline: +91 98120 44550 | ✉️ contact@1acre.in
+        </p>
+      </div>
+
+      <div>
+        <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">Regional Hub Offices</h4>
+        <div style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem;">
+          <strong style="color: #fff;">📍 Rohtak HQ:</strong><br>
+          Opp. Maharshi Dayanand University (Mastnath Area), Delhi Road, Rohtak, Haryana
+        </div>
+        <div style="font-size: 0.85rem; line-height: 1.6;">
+          <strong style="color: #fff;">📍 Gurgaon Corporate Branch:</strong><br>
+          Golf Course Extension Road, Sector 65, Gurgaon, Haryana
+        </div>
+      </div>
+
+      <div>
+        <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 1rem;">All 22 Districts Directory</h4>
+        <div style="font-size: 0.8rem; color: #94a3b8; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+          <a href="properties.html?district=Ambala" style="color: #94a3b8; text-decoration: none;">Ambala</a>
+          <a href="properties.html?district=Bhiwani" style="color: #94a3b8; text-decoration: none;">Bhiwani</a>
+          <a href="properties.html?district=Charkhi Dadri" style="color: #94a3b8; text-decoration: none;">Charkhi Dadri</a>
+          <a href="properties.html?district=Faridabad" style="color: #94a3b8; text-decoration: none;">Faridabad</a>
+          <a href="properties.html?district=Fatehabad" style="color: #94a3b8; text-decoration: none;">Fatehabad</a>
+          <a href="gurgaon-property.html" style="color: #94a3b8; text-decoration: none;">Gurgaon</a>
+          <a href="properties.html?district=Hisar" style="color: #94a3b8; text-decoration: none;">Hisar</a>
+          <a href="properties.html?district=Jhajjar" style="color: #94a3b8; text-decoration: none;">Jhajjar</a>
+          <a href="properties.html?district=Jind" style="color: #94a3b8; text-decoration: none;">Jind</a>
+          <a href="properties.html?district=Kaithal" style="color: #94a3b8; text-decoration: none;">Kaithal</a>
+          <a href="properties.html?district=Karnal" style="color: #94a3b8; text-decoration: none;">Karnal</a>
+          <a href="properties.html?district=Kurukshetra" style="color: #94a3b8; text-decoration: none;">Kurukshetra</a>
+          <a href="properties.html?district=Mahendragarh" style="color: #94a3b8; text-decoration: none;">Mahendragarh</a>
+          <a href="properties.html?district=Nuh" style="color: #94a3b8; text-decoration: none;">Nuh</a>
+          <a href="properties.html?district=Palwal" style="color: #94a3b8; text-decoration: none;">Palwal</a>
+          <a href="properties.html?district=Panchkula" style="color: #94a3b8; text-decoration: none;">Panchkula</a>
+          <a href="properties.html?district=Panipat" style="color: #94a3b8; text-decoration: none;">Panipat</a>
+          <a href="properties.html?district=Rewari" style="color: #94a3b8; text-decoration: none;">Rewari</a>
+          <a href="rohtak-property.html" style="color: #94a3b8; text-decoration: none;">Rohtak</a>
+          <a href="properties.html?district=Sirsa" style="color: #94a3b8; text-decoration: none;">Sirsa</a>
+          <a href="sonipat-property.html" style="color: #94a3b8; text-decoration: none;">Sonipat</a>
+          <a href="properties.html?district=Yamunanagar" style="color: #94a3b8; text-decoration: none;">Yamunanagar</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width: 1280px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid #1e293b; text-align: center; font-size: 0.85rem;">
+      © 2026 1Acre Real Estate Technologies Pvt Ltd. All rights reserved. Registered under RERA Haryana.
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let activeCategory = 'All';
+
+    function setSearchCategory(cat) {
+      activeCategory = cat;
+      document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+
+    function handleHeroSearch(e) {
+      e.preventDefault();
+      const loc = document.getElementById('search-location').value;
+      const type = document.getElementById('search-type').value;
+      const unit = document.getElementById('search-unit').value;
+      const budget = document.getElementById('search-budget').value;
+      
+      const queryParams = new URLSearchParams();
+      if (loc) queryParams.set('district', loc);
+      if (type) queryParams.set('subcategory', type);
+      if (unit) queryParams.set('unit', unit);
+      if (budget) queryParams.set('max_price', budget);
+      if (activeCategory !== 'All') queryParams.set('category', activeCategory);
+
+      window.location.href = `properties.html?${queryParams.toString()}`;
+    }
+
+    // Render Featured Cards on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('featured-properties-grid');
+      if (grid) {
+        const props = window.db.getProperties().filter(p => p.status === 'active').slice(0, 3);
+        grid.innerHTML = props.map(p => window.renderPropertyCard(p)).join('');
+      }
+    });
+  </script>
+</body>
+</html>

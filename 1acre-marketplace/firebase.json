@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/node_modules/**",
+      "server.ps1",
+      "supabase/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  }
+}

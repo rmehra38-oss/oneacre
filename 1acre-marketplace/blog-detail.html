@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Reader | 1Acre</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">GUIDES</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="blog.html" class="nav-link active">Guides & News</a>
+      </div>
+    </div>
+  </nav>
+
+  <article style="max-width: 850px; margin: 3rem auto; padding: 0 1.5rem;" id="article-reader">
+    <!-- JS populates article content -->
+  </article>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug') || 'haryana-land-registry-jamabandi-intakal-guide';
+      const blogs = window.db.getBlogs();
+      const article = blogs.find(b => b.slug === slug) || blogs[0];
+
+      const reader = document.getElementById('article-reader');
+      reader.innerHTML = `
+        <span style="color: var(--gold-500); font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">${article.category}</span>
+        <h1 style="font-size: 2.4rem; font-weight: 800; line-height: 1.25; margin: 0.5rem 0 1rem;">${article.title}</h1>
+        <div style="font-size: 0.9rem; color: var(--slate-500); margin-bottom: 2rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
+          By <strong>${article.author}</strong> • Published on ${article.created_at}
+        </div>
+        <img src="${article.image || 'assets/images/hero.jpg'}" style="width: 100%; height: 380px; object-fit: cover; border-radius: var(--radius-lg); margin-bottom: 2rem;" onerror="this.src='assets/images/hero.jpg'">
+        <div style="font-size: 1.1rem; line-height: 1.8; color: var(--slate-800);">
+          ${article.content}
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

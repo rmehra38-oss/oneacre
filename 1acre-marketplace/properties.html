@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Haryana Land & Properties | 1Acre</title>
+  <meta name="description" content="Search verified agricultural land, farmhouses, villas & plots in Rohtak, Gurgaon, Sonipat, Jhajjar and Haryana highway corridors. Filter by Acre, Bigha, budget & registry status.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Leaflet CSS for Interactive Map View -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">HARYANA</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link active">Properties</a>
+        <a href="rohtak-property.html" class="nav-link">Rohtak Land</a>
+        <a href="gurgaon-property.html" class="nav-link">Gurgaon Villas</a>
+        <a href="sonipat-property.html" class="nav-link">Sonipat / KMP</a>
+        <a href="blog.html" class="nav-link">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <select id="global-role-select" style="padding: 0.45rem 0.65rem; border-radius: 0.5rem; border: 1px solid #cbd5e1; font-size: 0.85rem; font-weight: 600; background: #fff;">
+          <option value="buyer">👤 Buyer View</option>
+          <option value="seller">🏡 Seller Portal</option>
+          <option value="admin">🛡️ Admin Panel</option>
+        </select>
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">+ List Property</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section style="background: var(--slate-900); color: #ffffff; padding: 2.5rem 1.5rem;">
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 2.2rem; font-weight: 800; color: #fff;">Haryana Property Marketplace</h1>
+        <p style="color: #94a3b8; margin-top: 0.25rem;">Browse verified land listings across Rohtak, Gurgaon, Sonipat, Jhajjar, and Delhi NCR.</p>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="btn-toggle-grid" onclick="switchView('grid')" class="btn-gold" style="padding: 0.5rem 1rem;">
+          ☰ Grid View
+        </button>
+        <button id="btn-toggle-map" onclick="switchView('map')" class="btn-outline" style="color: #fff; border-color: #475569; padding: 0.5rem 1rem;">
+          🗺️ Interactive Map
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Search Container -->
+  <div style="max-width: 1280px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem; align-items: start;">
+      
+      <!-- Filter Drawer Sidebar -->
+      <aside style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid #e2e8f0; position: sticky; top: 90px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;">
+          <h3 style="font-size: 1.1rem; font-weight: 700;">Filter Properties</h3>
+          <button onclick="resetFilters()" style="background: none; border: none; color: var(--gold-500); font-size: 0.85rem; font-weight: 600; cursor: pointer;">Reset All</button>
+        </div>
+
+        <form id="filter-form" onchange="applyFilters()">
+          <!-- District Filter -->
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.4rem;">District / City</label>
+            <select id="filter-district" style="width: 100%; padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-size: 0.9rem;">
+              <option value="">All Haryana Locations</option>
+              <option value="Ambala">Ambala</option>
+              <option value="Bhiwani">Bhiwani</option>
+              <option value="Charkhi Dadri">Charkhi Dadri</option>
+              <option value="Faridabad">Faridabad</option>
+              <option value="Fatehabad">Fatehabad</option>
+              <option value="Gurgaon">Gurgaon (Gurugram)</option>
+              <option value="Hisar">Hisar</option>
+              <option value="Jhajjar">Jhajjar</option>
+              <option value="Jind">Jind</option>
+              <option value="Kaithal">Kaithal</option>
+              <option value="Karnal">Karnal</option>
+              <option value="Kurukshetra">Kurukshetra</option>
+              <option value="Mahendragarh">Mahendragarh</option>
+              <option value="Nuh">Nuh (Mewat)</option>
+              <option value="Palwal">Palwal</option>
+              <option value="Panchkula">Panchkula</option>
+              <option value="Panipat">Panipat</option>
+              <option value="Rewari">Rewari</option>
+              <option value="Rohtak">Rohtak</option>
+              <option value="Sirsa">Sirsa</option>
+              <option value="Sonipat">Sonipat</option>
+              <option value="Yamunanagar">Yamunanagar</option>
+            </select>
+          </div>
+
+          <!-- Category Filter -->
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.4rem;">Category</label>
+            <select id="filter-category" style="width: 100%; padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-size: 0.9rem;">
+              <option value="">All Categories</option>
+              <option value="Agriculture">Agriculture</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </div>
+
+          <!-- Subcategory Filter -->
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.4rem;">Subcategory</label>
+            <select id="filter-subcategory" style="width: 100%; padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-size: 0.9rem;">
+              <option value="">All Subcategories</option>
+              <option value="Agricultural Land">Agricultural Land</option>
+              <option value="Farm House">Farm House</option>
+              <option value="Villa">Luxury Villa</option>
+              <option value="Plot">Residential Plot</option>
+              <option value="Commercial Land">Commercial Land</option>
+            </select>
+          </div>
+
+          <!-- Measurement Unit -->
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.4rem;">Unit System</label>
+            <select id="filter-unit" style="width: 100%; padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-size: 0.9rem;">
+              <option value="">All Units</option>
+              <option value="Acre">Acre</option>
+              <option value="Bigha">Bigha</option>
+              <option value="Square Yard">Square Yard (Sq.Yd)</option>
+            </select>
+          </div>
+
+          <!-- Verified Only Toggle -->
+          <div style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; background: var(--primary-50); padding: 0.75rem; border-radius: var(--radius-sm);">
+            <input type="checkbox" id="filter-verified" style="width: 18px; height: 18px; accent-color: var(--primary-900);">
+            <label for="filter-verified" style="font-size: 0.85rem; font-weight: 700; color: var(--primary-900); cursor: pointer;">
+              ⭐ 1Acre Verified Only
+            </label>
+          </div>
+
+          <!-- Seller Type -->
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--slate-700); margin-bottom: 0.4rem;">Seller Type</label>
+            <select id="filter-seller" style="width: 100%; padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; font-size: 0.9rem;">
+              <option value="">All Sellers</option>
+              <option value="Owner">Direct Land Owner</option>
+              <option value="Broker">Broker / Consultant</option>
+              <option value="Builder">Builder / Developer</option>
+            </select>
+          </div>
+        </form>
+      </aside>
+
+      <!-- Results Display View -->
+      <main>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+          <h2 style="font-size: 1.25rem; font-weight: 700;" id="results-count">Showing All Properties</h2>
+          <span style="font-size: 0.85rem; color: var(--slate-500);">Sorted by: Latest Listed</span>
+        </div>
+
+        <!-- Grid View Mode -->
+        <div id="grid-view-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+          <!-- JS populates cards here -->
+        </div>
+
+        <!-- Map View Mode -->
+        <div id="map-view-container" style="display: none; height: 600px; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid #cbd5e1; box-shadow: var(--shadow-premium);">
+          <div id="leaflet-map" style="width: 100%; height: 100%;"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    let mapInstance = null;
+    let mapMarkers = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Parse URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('district')) document.getElementById('filter-district').value = urlParams.get('district');
+      if (urlParams.get('category')) document.getElementById('filter-category').value = urlParams.get('category');
+      if (urlParams.get('subcategory')) document.getElementById('filter-subcategory').value = urlParams.get('subcategory');
+      if (urlParams.get('unit')) document.getElementById('filter-unit').value = urlParams.get('unit');
+
+      applyFilters();
+    });
+
+    function applyFilters() {
+      const district = document.getElementById('filter-district').value;
+      const category = document.getElementById('filter-category').value;
+      const subcategory = document.getElementById('filter-subcategory').value;
+      const unit = document.getElementById('filter-unit').value;
+      const verified = document.getElementById('filter-verified').checked;
+      const seller = document.getElementById('filter-seller').value;
+
+      let list = window.db.getProperties().filter(p => p.status === 'active');
+
+      if (district) list = list.filter(p => p.district === district || p.city === district);
+      if (category) list = list.filter(p => p.category === category);
+      if (subcategory) list = list.filter(p => p.subcategory === subcategory);
+      if (unit) list = list.filter(p => p.unit === unit);
+      if (verified) list = list.filter(p => p.verification_status === true);
+      if (seller) list = list.filter(p => p.seller_type === seller);
+
+      document.getElementById('results-count').innerText = `Showing (${list.length}) Properties`;
+
+      // Render Grid View
+      const grid = document.getElementById('grid-view-container');
+      if (list.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; padding: 3rem; text-align: center; background: #fff; border-radius: var(--radius-lg);"><p style="font-size: 1.1rem; color: var(--slate-500);">No properties match your current filter selection.</p></div>`;
+      } else {
+        grid.innerHTML = list.map(p => window.renderPropertyCard(p)).join('');
+      }
+
+      // Update Map Markers if Map View Active
+      if (mapInstance && document.getElementById('map-view-container').style.display !== 'none') {
+        updateMapMarkers(list);
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-form').reset();
+      applyFilters();
+    }
+
+    function switchView(mode) {
+      const gridContainer = document.getElementById('grid-view-container');
+      const mapContainer = document.getElementById('map-view-container');
+      const btnGrid = document.getElementById('btn-toggle-grid');
+      const btnMap = document.getElementById('btn-toggle-map');
+
+      if (mode === 'map') {
+        gridContainer.style.display = 'none';
+        mapContainer.style.display = 'block';
+        btnMap.className = 'btn-gold';
+        btnGrid.className = 'btn-outline';
+
+        if (!mapInstance) {
+          initMap();
+        }
+        applyFilters();
+      } else {
+        gridContainer.style.display = 'grid';
+        mapContainer.style.display = 'none';
+        btnGrid.className = 'btn-gold';
+        btnMap.className = 'btn-outline';
+      }
+    }
+
+    function initMap() {
+      // Center map on Haryana (Rohtak-Gurgaon region)
+      mapInstance = L.map('leaflet-map').setView([28.6000, 76.8000], 9);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(mapInstance);
+    }
+
+    function updateMapMarkers(properties) {
+      mapMarkers.forEach(m => mapInstance.removeLayer(m));
+      mapMarkers = [];
+
+      properties.forEach(p => {
+        if (p.latitude && p.longitude) {
+          const marker = L.marker([p.latitude, p.longitude]).addTo(mapInstance);
+          marker.bindPopup(`
+            <div style="font-family: var(--font-body); padding: 0.25rem;">
+              <strong style="color: var(--primary-900); font-size: 0.95rem;">${p.title}</strong><br>
+              <span style="font-weight: 700; color: var(--gold-500);">${p.price_display || '₹ ' + p.price}</span><br>
+              <a href="property-detail.html?id=${p.id}" style="color: var(--primary-800); text-decoration: underline; font-size: 0.85rem;">View Listing →</a>
+            </div>
+          `);
+          mapMarkers.push(marker);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

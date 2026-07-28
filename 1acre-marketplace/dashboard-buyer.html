@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buyer Dashboard | 1Acre</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">BUYER PORTAL</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="dashboard-buyer.html" class="nav-link active">My Wishlist & Visits</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <select id="global-role-select" style="padding: 0.45rem 0.65rem; border-radius: 0.5rem; border: 1px solid #cbd5e1; font-size: 0.85rem; font-weight: 600; background: #fff;">
+          <option value="buyer">👤 Buyer View</option>
+          <option value="seller">🏡 Seller Portal</option>
+          <option value="admin">🛡️ Admin Panel</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Container -->
+  <div style="max-width: 1280px; margin: 2rem auto; padding: 0 1.5rem;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+      <div>
+        <h1 style="font-size: 2rem; font-weight: 800;">Welcome, Amit Sharma 👋</h1>
+        <p style="color: var(--slate-600); margin-top: 0.25rem;">Manage your saved properties, inquiries, and scheduled site visits.</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+      
+      <!-- Left Column: Saved Wishlist Properties -->
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary-900);">❤️ Saved Wishlist Properties</h2>
+        <div id="buyer-favs-container" style="display: flex; flex-direction: column; gap: 1.25rem;"></div>
+      </div>
+
+      <!-- Right Column: Scheduled Visits & Sent Inquiries -->
+      <div>
+        <!-- Scheduled Site Visits Card -->
+        <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--gold-500);">📅 Scheduled Site Visits</h3>
+          <div id="buyer-visits-container"></div>
+        </div>
+
+        <!-- Sent Inquiries Card -->
+        <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid #e2e8f0;">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary-900);">💬 Sent Inquiries & Lead Status</h3>
+          <div id="buyer-inquiries-container"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Render Saved Wishlist
+      const favIds = window.db.getFavorites();
+      const allProps = window.db.getProperties();
+      const favProps = allProps.filter(p => favIds.includes(p.id));
+      const favContainer = document.getElementById('buyer-favs-container');
+
+      if (favProps.length === 0) {
+        favContainer.innerHTML = `<div style="background: #fff; padding: 2rem; border-radius: var(--radius-md); text-align: center; color: var(--slate-500);">No saved properties yet. Browse the marketplace to bookmark properties!</div>`;
+      } else {
+        favContainer.innerHTML = favProps.map(p => window.renderPropertyCard(p)).join('');
+      }
+
+      // 2. Render Scheduled Visits
+      const visits = window.db.getVisits();
+      const visitsContainer = document.getElementById('buyer-visits-container');
+      if (visits.length === 0) {
+        visitsContainer.innerHTML = `<p style="font-size: 0.9rem; color: var(--slate-500);">No site visits scheduled.</p>`;
+      } else {
+        visitsContainer.innerHTML = visits.map(v => `
+          <div style="background: var(--slate-50); padding: 1rem; border-radius: var(--radius-sm); border-left: 4px solid var(--gold-500); margin-bottom: 0.75rem;">
+            <strong style="display: block; font-size: 0.95rem; color: var(--slate-900);">${v.property_title}</strong>
+            <div style="font-size: 0.85rem; color: var(--slate-600); margin-top: 0.25rem;">
+              📅 Date: <strong>${v.preferred_date}</strong> | ⏰ Slot: <strong>${v.preferred_time}</strong>
+            </div>
+            <span class="brand-badge" style="background: var(--primary-900); font-size: 0.65rem; margin-top: 0.35rem; display: inline-block;">${v.status.toUpperCase()}</span>
+          </div>
+        `).join('');
+      }
+
+      // 3. Render Sent Inquiries
+      const inqs = window.db.getInquiries();
+      const inqContainer = document.getElementById('buyer-inquiries-container');
+      if (inqs.length === 0) {
+        inqContainer.innerHTML = `<p style="font-size: 0.9rem; color: var(--slate-500);">No inquiries sent yet.</p>`;
+      } else {
+        inqContainer.innerHTML = inqs.map(i => `
+          <div style="background: var(--slate-50); padding: 1rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary-800); margin-bottom: 0.75rem;">
+            <strong style="display: block; font-size: 0.95rem;">${i.property_title}</strong>
+            <p style="font-size: 0.85rem; color: var(--slate-600); margin: 0.35rem 0;">"${i.message}"</p>
+            <span style="font-size: 0.75rem; color: var(--slate-500);">Sent on: ${i.created_at}</span>
+          </div>
+        `).join('');
+      }
+    });
+  </script>
+</body>
+</html>

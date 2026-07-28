@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agriculture Land for Sale in Rohtak | 1Acre</title>
+  <meta name="description" content="Buy fertile agriculture land & farming plots in Rohtak near MDU bypass, Delhi road corridor & Sonipat highway. Tubewell water, pakka road access & verified Jamabandi titles.">
+  <meta name="keywords" content="Agriculture land in Rohtak, Rohtak agricultural land for sale, Farmland in Rohtak, Jamabandi Rohtak land">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": "Agriculture Land for Sale in Rohtak",
+    "description": "Fertile agricultural land plots in Rohtak with clear title registry.",
+    "areaServed": "Rohtak"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">ROHTAK LAND</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="rohtak-property.html" class="nav-link active">Rohtak Land</a>
+        <a href="gurgaon-property.html" class="nav-link">Gurgaon Villas</a>
+        <a href="blog.html" class="nav-link">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">+ List Rohtak Land</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <section style="background: linear-gradient(135deg, var(--primary-900), #022c22); color: #ffffff; padding: 4rem 1.5rem;">
+    <div style="max-width: 1280px; margin: 0 auto;">
+      <div style="max-width: 800px;">
+        <span style="color: var(--gold-400); font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">SPECIALIZED HARYANA FARMLAND PORTAL</span>
+        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin: 0.5rem 0 1rem; color: #fff;">
+          Agriculture Land for Sale in Rohtak
+        </h1>
+        <p style="font-size: 1.15rem; opacity: 0.95; line-height: 1.6;">
+          Fertile agricultural land plots, tubewell connected farmland, and investment parcels near MDU Bypass, Mastnath Area, and Sonipat Road with clear Jamabandi & Intakal mutation records.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rohtak Agriculture Listings -->
+  <section style="max-width: 1280px; margin: 3rem auto; padding: 0 1.5rem;">
+    <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 1.5rem;">Available Agriculture Land in Rohtak</h2>
+    <div id="rohtak-agri-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;"></div>
+  </section>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('rohtak-agri-grid');
+      const agriProps = window.db.getProperties().filter(p => (p.district === 'Rohtak' || p.city === 'Rohtak') && p.category === 'Agriculture');
+      if (agriProps.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; padding: 2rem; background: #fff; text-align: center;">Showing all agricultural land listings in Rohtak.</div>`;
+      } else {
+        grid.innerHTML = agriProps.map(p => window.renderPropertyCard(p)).join('');
+      }
+    });
+  </script>
+</body>
+</html>

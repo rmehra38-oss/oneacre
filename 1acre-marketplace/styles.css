@@ -1,0 +1,523 @@
+/* ========================================================
+   1Acre - Haryana Real Estate Marketplace Design System
+   Color Palette: Forest Green (#064e3b, #042f2e), Champagne Gold (#d97706, #f59e0b), Pure White (#ffffff)
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-900: #064e3b;
+  --primary-800: #047857;
+  --primary-700: #059669;
+  --primary-50: #ecfdf5;
+  --gold-500: #d97706;
+  --gold-400: #f59e0b;
+  --gold-100: #fef3c7;
+  --dark-bg: #0f172a;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+  --shadow-premium: 0 20px 25px -5px rgba(6, 78, 59, 0.1), 0 8px 10px -6px rgba(6, 78, 59, 0.05);
+  --shadow-hover: 0 25px 30px -5px rgba(6, 78, 59, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #f8fafc;
+  color: var(--slate-900);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--slate-900);
+}
+
+/* Header & Glass Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  transition: all 0.3s ease;
+}
+
+.brand-logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.75rem;
+  color: var(--primary-900);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.brand-badge {
+  background: var(--gold-500);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  color: var(--slate-800);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--primary-800);
+}
+
+.btn-primary {
+  background-color: var(--primary-900);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(6, 78, 59, 0.25);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-800);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(6, 78, 59, 0.35);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+  text-decoration: none;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--primary-900);
+  color: var(--primary-900);
+  background: transparent;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--primary-50);
+}
+
+/* Hero Section */
+.hero-wrapper {
+  position: relative;
+  min-height: 580px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  border-radius: 0 0 2rem 2rem;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.88) 0%, rgba(15, 23, 42, 0.82) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  color: #ffffff;
+}
+
+/* Search Card */
+.search-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  margin-top: 2rem;
+  color: var(--slate-900);
+}
+
+.search-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--slate-100);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.search-tab {
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--slate-600);
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.search-tab.active {
+  background: var(--primary-900);
+  color: #ffffff;
+}
+
+/* Property Cards */
+.property-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.property-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(6, 78, 59, 0.2);
+}
+
+.card-image-wrap {
+  position: relative;
+  height: 220px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.property-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.badge-verified {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(6, 78, 59, 0.9);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.badge-verified-gold {
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-400));
+}
+
+.btn-fav {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  color: var(--slate-600);
+  transition: all 0.2s ease;
+}
+
+.btn-fav.active, .btn-fav:hover {
+  background: #ffffff;
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.card-price-unit {
+  font-size: 0.85rem;
+  color: var(--slate-500);
+  font-weight: 500;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0.4rem 0;
+  line-height: 1.3;
+  color: var(--slate-900);
+}
+
+.card-location {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--slate-500);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px dashed #e2e8f0;
+  border-bottom: 1px dashed #e2e8f0;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: var(--slate-600);
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--slate-50);
+  padding: 0.4rem;
+  border-radius: var(--radius-sm);
+}
+
+.feature-label {
+  font-size: 0.7rem;
+  color: var(--slate-500);
+  text-transform: uppercase;
+}
+
+.feature-val {
+  font-weight: 700;
+  color: var(--slate-800);
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  max-width: 550px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  transform: translateY(20px);
+  transition: transform 0.25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.open .modal-card {
+  transform: translateY(0);
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toast {
+  background: var(--slate-900);
+  color: #ffffff;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  animation: slideInRight 0.3s ease forwards;
+  border-left: 4px solid var(--gold-500);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Location Tag Pill */
+.loc-pill {
+  background: var(--primary-50);
+  color: var(--primary-900);
+  border: 1px solid rgba(6, 78, 59, 0.2);
+  padding: 0.35rem 0.85rem;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.loc-pill:hover {
+  background: var(--primary-900);
+  color: #ffffff;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==============================
+   22 Haryana District Chips
+   ============================== */
+.district-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.district-chip:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
+.district-chip-gold {
+  background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+  border-color: var(--gold-400);
+  color: #1a1a1a;
+}
+
+.district-chip-gold:hover {
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+  border-color: var(--gold-300);
+  color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(217, 165, 32, 0.4);
+}

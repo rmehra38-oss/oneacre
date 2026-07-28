@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details | 1Acre Real Estate</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="brand-logo">
+        1Acre
+        <span class="brand-badge">HARYANA</span>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 1.5rem;" class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="properties.html" class="nav-link">Properties</a>
+        <a href="rohtak-property.html" class="nav-link">Rohtak Land</a>
+        <a href="gurgaon-property.html" class="nav-link">Gurgaon Villas</a>
+        <a href="sonipat-property.html" class="nav-link">Sonipat / KMP</a>
+        <a href="blog.html" class="nav-link">Guides & News</a>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <select id="global-role-select" style="padding: 0.45rem 0.65rem; border-radius: 0.5rem; border: 1px solid #cbd5e1; font-size: 0.85rem; font-weight: 600; background: #fff;">
+          <option value="buyer">👤 Buyer View</option>
+          <option value="seller">🏡 Seller Portal</option>
+          <option value="admin">🛡️ Admin Panel</option>
+        </select>
+        <a href="add-property.html" class="btn-gold" style="font-size: 0.9rem; padding: 0.55rem 1.1rem;">+ List Property</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="max-width: 1280px; margin: 2rem auto; padding: 0 1.5rem;" id="property-detail-container">
+    <!-- JS populates content here -->
+  </div>
+
+  <!-- Schedule Site Visit Modal -->
+  <div class="modal-overlay" id="visit-modal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700;">Schedule Site Visit</h3>
+        <button onclick="closeVisitModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--slate-600); margin-bottom: 1rem;" id="modal-prop-title-text"></p>
+      
+      <form id="visit-form" onsubmit="submitVisitForm(event)">
+        <input type="hidden" id="modal-prop-id">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">Your Full Name</label>
+          <input type="text" id="visit-name" required placeholder="e.g. Rahul Sharma" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">Mobile Phone Number</label>
+          <input type="tel" id="visit-phone" required placeholder="+91 98765 43210" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1;">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+          <div>
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">Preferred Date</label>
+            <input type="date" id="visit-date" required style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.35rem;">Preferred Slot</label>
+            <select id="visit-time" style="width: 100%; padding: 0.65rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1;">
+              <option value="Morning (10 AM - 1 PM)">Morning (10 AM - 1 PM)</option>
+              <option value="Afternoon (1 PM - 4 PM)">Afternoon (1 PM - 4 PM)</option>
+              <option value="Evening (4 PM - 6:30 PM)">Evening (4 PM - 6:30 PM)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Confirm & Book Visit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const propId = urlParams.get('id') || 'prop-101';
+      const prop = window.db.getPropertyById(propId);
+
+      const container = document.getElementById('property-detail-container');
+      if (!prop) {
+        container.innerHTML = `<div style="text-align: center; padding: 4rem;"><h2 style="font-size: 1.5rem; color: var(--slate-600);">Property Not Found</h2><a href="properties.html" class="btn-primary" style="margin-top: 1rem;">Back to Marketplace</a></div>`;
+        return;
+      }
+
+      // Render Property Header & Gallery
+      container.innerHTML = `
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+          <div>
+            <!-- Breadcrumbs -->
+            <div style="font-size: 0.85rem; color: var(--slate-500); margin-bottom: 1rem;">
+              <a href="index.html" style="color: inherit; text-decoration: none;">Home</a> / 
+              <a href="properties.html" style="color: inherit; text-decoration: none;">Properties</a> / 
+              <span style="color: var(--slate-800); font-weight: 600;">${prop.district}</span>
+            </div>
+
+            <!-- Title & Price -->
+            <h1 style="font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.5rem;">${prop.title}</h1>
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+              <span class="card-location" style="font-size: 1rem; font-weight: 500;">📍 ${prop.village_landmark}, ${prop.city}, ${prop.district}, Haryana</span>
+              ${prop.verification_status ? `<span class="badge-verified badge-verified-gold" style="position: static;">⭐ 1Acre Verified Property</span>` : ''}
+            </div>
+
+            <!-- Media Lightbox / Main Image -->
+            <div style="border-radius: var(--radius-lg); overflow: hidden; height: 420px; box-shadow: var(--shadow-premium); margin-bottom: 2rem; position: relative;">
+              <img src="${prop.images[0] || 'assets/images/agriculture.jpg'}" alt="${prop.title}" style="width: 100%; height: 100%; object-fit: cover;" id="main-gallery-img">
+              <div style="position: absolute; bottom: 1rem; right: 1rem; background: rgba(15,23,42,0.85); color: #fff; padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); font-size: 0.85rem;">
+                📹 Aerial Drone & Video Tour Available
+              </div>
+            </div>
+
+            <!-- Overview Specs Card -->
+            <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.75rem; border: 1px solid #e2e8f0; margin-bottom: 2rem;">
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; border-bottom: 2px solid var(--primary-50); padding-bottom: 0.5rem;">Property Overview</h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.25rem;">
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--slate-500); font-weight: 700; text-transform: uppercase;">Total Land Area</span>
+                  <p style="font-size: 1.1rem; font-weight: 700; color: var(--primary-900);">${prop.area} ${prop.unit}</p>
+                </div>
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--slate-500); font-weight: 700; text-transform: uppercase;">Price Unit</span>
+                  <p style="font-size: 1.1rem; font-weight: 700; color: var(--gold-500);">${prop.price_display || '₹ ' + prop.price}</p>
+                </div>
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--slate-500); font-weight: 700; text-transform: uppercase;">Road Width</span>
+                  <p style="font-size: 1.1rem; font-weight: 700;">${prop.road_width_ft} Feet Pakka Road</p>
+                </div>
+                <div>
+                  <span style="font-size: 0.75rem; color: var(--slate-500); font-weight: 700; text-transform: uppercase;">Registry Status</span>
+                  <p style="font-size: 1.1rem; font-weight: 700;">${prop.registry_status}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Full Description -->
+            <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.75rem; border: 1px solid #e2e8f0; margin-bottom: 2rem;">
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Detailed Description</h3>
+              <p style="color: var(--slate-700); line-height: 1.7; font-size: 1rem;">${prop.description}</p>
+            </div>
+
+            <!-- Feature Attributes Matrix -->
+            <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.75rem; border: 1px solid #e2e8f0; margin-bottom: 2rem;">
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem;">Land & Utility Features</h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); padding: 0.75rem; border-radius: var(--radius-sm);">
+                  <span>⚡ Electricity Connection:</span>
+                  <strong>${prop.electricity_available ? '3-Phase Available' : 'No'}</strong>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); padding: 0.75rem; border-radius: var(--radius-sm);">
+                  <span>💧 Tubewell / Water:</span>
+                  <strong>${prop.water_facility ? 'Borewell Active' : 'No'}</strong>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); padding: 0.75rem; border-radius: var(--radius-sm);">
+                  <span>🧭 Facing Direction:</span>
+                  <strong>${prop.facing || 'North-East'}</strong>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--slate-50); padding: 0.75rem; border-radius: var(--radius-sm);">
+                  <span>🏦 Bank Loan Status:</span>
+                  <strong>${prop.loan_availability ? 'Pre-Approved Eligible' : 'N/A'}</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Map Location -->
+            <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.75rem; border: 1px solid #e2e8f0; margin-bottom: 2rem;">
+              <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">Geographic Location Map</h3>
+              <div id="detail-map" style="height: 320px; border-radius: var(--radius-md); border: 1px solid #cbd5e1;"></div>
+            </div>
+          </div>
+
+          <!-- Sticky Right Sidebar (Price Card & Seller Details) -->
+          <aside style="position: sticky; top: 90px;">
+            <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.75rem; border: 1px solid #e2e8f0; box-shadow: var(--shadow-premium); margin-bottom: 1.5rem;">
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--slate-500); text-transform: uppercase;">Total Valuation</div>
+              <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary-900); margin: 0.25rem 0 1.25rem;">
+                ${prop.price_display || ('₹ ' + (prop.price / 10000000).toFixed(2) + ' Cr')}
+              </div>
+
+              <!-- CTA Action Buttons -->
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button onclick="openWhatsAppInquiry('${prop.title.replace(/'/g, "\\'")}', '${prop.id}')" class="btn-gold" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.75rem;">
+                  💬 Instant WhatsApp Chat
+                </button>
+                <button onclick="openVisitModal('${prop.id}', '${prop.title.replace(/'/g, "\\'")}')" class="btn-primary" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.75rem;">
+                  📅 Schedule Site Visit
+                </button>
+                <a href="tel:${prop.seller_phone}" class="btn-outline" style="width: 100%; justify-content: center; font-size: 1rem; padding: 0.75rem;">
+                  📞 Call Representative: ${prop.seller_phone}
+                </a>
+              </div>
+            </div>
+
+            <!-- Seller / Broker Card -->
+            <div style="background: #ffffff; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid #e2e8f0;">
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--gold-500); text-transform: uppercase; margin-bottom: 0.5rem;">Listed By</div>
+              <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--slate-900);">${prop.seller_name}</h4>
+              <p style="font-size: 0.85rem; color: var(--slate-500); margin-bottom: 1rem;">Role: ${prop.seller_type} (${prop.district} Office)</p>
+              <div style="font-size: 0.85rem; background: var(--primary-50); color: var(--primary-900); padding: 0.5rem; border-radius: var(--radius-sm); text-align: center; font-weight: 600;">
+                ✓ Verified Identity & Land Ownership
+              </div>
+            </div>
+          </aside>
+        </div>
+      `;
+
+      // Init Detail Map
+      if (prop.latitude && prop.longitude) {
+        setTimeout(() => {
+          const detailMap = L.map('detail-map').setView([prop.latitude, prop.longitude], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(detailMap);
+          L.marker([prop.latitude, prop.longitude]).addTo(detailMap).bindPopup(prop.title).openPopup();
+        }, 100);
+      }
+    });
+
+    function submitVisitForm(e) {
+      e.preventDefault();
+      const visitData = {
+        property_id: document.getElementById('modal-prop-id').value,
+        property_title: document.getElementById('modal-prop-title-text').innerText,
+        buyer_name: document.getElementById('visit-name').value,
+        buyer_phone: document.getElementById('visit-phone').value,
+        preferred_date: document.getElementById('visit-date').value,
+        preferred_time: document.getElementById('visit-time').value
+      };
+      window.db.addVisit(visitData);
+      closeVisitModal();
+      showToast('Site visit scheduled successfully! Our Rohtak / Gurgaon advisor will contact you.');
+    }
+  </script>
+</body>
+</html>
